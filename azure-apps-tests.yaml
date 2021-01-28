@@ -1,0 +1,148 @@
+######   Don't run against commits, change when you need it ######
+trigger: none
+
+pr:
+  branches:
+    include:
+    - devops-dev
+    - dev
+    - 'release/*'
+  paths:
+    exclude:
+    - README.md
+    - '*.yaml'
+    - '*.yml'
+stages: 
+- stage: environment
+  jobs:
+  - job: environment
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - bash: |
+        BRANCH_NAME=$(echo "$(System.PullRequest.TargetBranch)")
+        echo "##vso[task.setvariable variable=PullRequest_Target_Branch;isOutput=true]$BRANCH_NAME"
+      name: environment
+
+- stage: Tests
+  variables:
+    varFrom: $[ stageDependencies.environment.environment.outputs['environment.PullRequest_Target_Branch'] ]
+  jobs:
+  - job: devops_dev
+    condition: eq(stageDependencies.environment.environment.outputs['environment.PullRequest_Target_Branch'], 'devops-dev')
+    variables:
+    - name: env
+      value: devops-dev 
+    - name: prefix
+      value: "devops-dev"
+    - name: service_principal_name
+      value: $(dev_service_principal_name)
+    - name: registry_url
+      value: globalndaxregistry.azurecr.io
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: build
+      inputs:
+        containerRegistry: ${{ variables.service_principal_name }}
+        repository: '$(app_type)'
+        command: 'build'
+        Dockerfile: './Dockerfile'
+        tags: ${{ variables.prefix }}-$(Build.BuildNumber)
+        arguments: --build-arg ENV=${{ variables.env }}
+        addPipelineData: false
+    - task: UseNode@1
+      displayName: node install
+      inputs:
+        version: '12.x'
+    - script: |
+        npm install
+        npm audit --audit-level=critical
+      displayName: npm audit
+    - task: CmdLine@2
+      displayName: Scan image
+      inputs:
+        script: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --light --no-progress --exit-code 0 --severity HIGH --ignore-unfixed $(registry_url)/$(app_type):$(prefix)-$(Build.BuildNumber) globalndaxregistryprod
+        
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --light --no-progress --exit-code 1 --severity CRITICAL --ignore-unfixed $(registry_url)/$(app_type):$(prefix)-$(Build.BuildNumber)
+  - job: dev
+    condition: eq(stageDependencies.environment.environment.outputs['environment.PullRequest_Target_Branch'], 'dev')
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+    - name: env
+      value: dev
+    - name: prefix
+      value: "dev" 
+    - name: service_principal_name
+      value: $(dev_service_principal_name)
+    - name: registry_url
+      value: globalndaxregistry.azurecr.io
+    steps:
+    - task: Docker@2
+      displayName: build
+      inputs:
+        containerRegistry: ${{ variables.service_principal_name }}
+        repository: '$(app_type)'
+        command: 'build'
+        Dockerfile: './Dockerfile'
+        tags: ${{ variables.prefix }}-$(Build.BuildNumber)
+        arguments: --build-arg ENV=${{ variables.env }}
+        addPipelineData: false
+    - task: UseNode@1
+      displayName: node install
+      inputs:
+        version: '12.x'
+    - script: |
+        npm install
+        npm audit --audit-level=critical
+      displayName: npm audit
+    - task: CmdLine@2
+      displayName: Scan image
+      inputs:
+        script: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --light --no-progress --exit-code 0 --severity HIGH --ignore-unfixed $(registry_url)/$(app_type):$(prefix)-$(Build.BuildNumber) globalndaxregistryprod
+        
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --light --no-progress --exit-code 1 --severity CRITICAL --ignore-unfixed $(registry_url)/$(app_type):$(prefix)-$(Build.BuildNumber)
+  - job: Production
+    condition: startsWith(stageDependencies.environment.environment.outputs['environment.PullRequest_Target_Branch'], 'release/')
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+    - name: env
+      value: prod
+    - name: prefix
+      value: "prod" 
+    - name: service_principal_name
+      value: $(prod_service_principal_name)
+    - name: registry_url
+      value: globalndaxregistryprod.azurecr.io
+    steps:
+    - task: Docker@2
+      displayName: build
+      inputs:
+        containerRegistry: ${{ variables.service_principal_name }}
+        repository: '$(app_type)'
+        command: 'build'
+        Dockerfile: './Dockerfile'
+        tags: ${{ variables.prefix }}-$(Build.BuildNumber)
+        arguments: --build-arg ENV=${{ variables.env }}
+        addPipelineData: false
+    - task: UseNode@1
+      displayName: node install
+      inputs:
+        version: '12.x'
+    - script: |
+        npm install
+        npm audit --audit-level=critical
+      displayName: npm audit
+    - task: CmdLine@2
+      displayName: Scan image
+      inputs:
+        script: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --light --no-progress --exit-code 0 --severity HIGH --ignore-unfixed $(registry_url)/$(app_type):$(prefix)-$(Build.BuildNumber) globalndaxregistryprod
+        
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy --light --no-progress --exit-code 1 --severity CRITICAL --ignore-unfixed $(registry_url)/$(app_type):$(prefix)-$(Build.BuildNumber)
+          

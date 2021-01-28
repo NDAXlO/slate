@@ -1,0 +1,112 @@
+trigger: 
+  branches:
+    include:
+    - 'release/*'
+    - dev
+    - devops-dev
+
+variables:
+- ${{ if eq(variables['Build.SourceBranchName'], 'dev') }}:
+  - name: env
+    value: stage 
+  - name: prefix
+    value: "dev"
+  - name: service_principal_name
+    value: $(dev_service_principal_name)
+  - name: helmcharts_folder
+    value: $(Build.SourceBranchName) 
+- ${{ if startsWith(variables['Build.SourceBranchName'], 'release/') }}:
+  - name: env
+    value: prod
+  - name: prefix
+    value: "prod" 
+  - name: service_principal_name
+    value: $(prod_service_principal_name)
+  - name: helmcharts_folder
+    value: production
+- ${{ if eq(variables['Build.SourceBranchName'], 'devops-dev') }}:
+  - name: env
+    value: devops-dev 
+  - name: prefix
+    value: "devops-dev"
+  - name: service_principal_name
+    value: $(dev_service_principal_name)
+  - name: helmcharts_folder
+    value: $(Build.SourceBranchName) 
+
+pr: none
+    
+stages:     
+- stage: push
+  jobs:
+    - job: Push
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+################  Uncomment if you have access to azure AD and created the SP #####################
+      - task: Docker@2
+        displayName: build
+        inputs:
+          containerRegistry: '$(service_principal_name)'
+          repository: '$(app_type)'
+          command: 'build'
+          Dockerfile: './Dockerfile'
+          tags: '$(prefix)-$(Build.BuildNumber)'
+          arguments: '--build-arg ENV=$(env)'  
+          addPipelineData: false
+
+      - task: Docker@2
+        inputs:
+          containerRegistry: '$(service_principal_name)'
+          command: 'login'
+          addPipelineData: false
+    
+      - task: Docker@2
+        inputs:
+          containerRegistry: '$(service_principal_name)'
+          repository: '$(app_type)'
+          command: 'push'
+          tags: '$(prefix)-$(Build.BuildNumber)'
+          addPipelineData: false
+###############################################################################
+
+    - job: cloneRepo
+      dependsOn: Push
+      workspace:
+        clean: all
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - task: InstallSSHKey@0
+        inputs:
+          knownHostsEntry: '$(known_hosts_entry)'
+          sshPublicKey: '$(ssh_public_key)'
+          sshKeySecureFile: '$(ssh_private_key_name)'
+
+      - task: CmdLine@2
+        displayName: clone repo
+        inputs:
+          script: git clone $(helm_repo)
+
+      - task: HelmInstaller@1
+        displayName: install helm 
+        inputs:
+          helmVersionToInstall: '3.1.2'
+      
+      - task: CmdLine@2
+        displayName: install helm release plugin
+        continueOnError: true
+        inputs:
+          script: helm plugin install https://github.com/sstarcher/helm-release
+      
+      - task: CmdLine@2
+        displayName: update git repo
+        inputs:
+          script: |
+            (cd $(helm_repo_name); helm release $(helmcharts_folder)/$(app_type) -t $(prefix)-$(Build.BuildNumber))
+
+            git config --global user.name "ci-pipeline"
+            git config --global user.email "ci-pipeline"
+            (cd $(helm_repo_name); git commit -am "update $(helmcharts_folder)/$(app_type) docker image to $(prefix)-$(Build.BuildNumber)")
+
+            (cd $(helm_repo_name); git push)
