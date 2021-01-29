@@ -50,7 +50,6 @@ includes: # api - group - category - call
   - accounts/api_accts_user_generatetreasuryactivityreport
   - accounts/api_accts_user_getaccountinfo
   - accounts/api_accts_user_getaccountpositions
-  - accounts/api_accts_system_getallaccountconfigs
   - accounts/api_accts_user_gettreasuryproductsforaccount
   - accounts/api_accts_user_scheduletradeactivityreport
   - accounts/api_accts_user_scheduletransactionactivityreport
@@ -77,7 +76,6 @@ includes: # api - group - category - call
   - oms_orders/api_omsord_user_getorderstatus
   - oms_orders/api_omsord_user_modifyorder
   - oms_orders/api_omsord_user_sendorder
-  - oms_orders/api_omsord_user_submitblocktrade
   - oms_orders/api_omsord_user_updatequote
   - products/api_products_divider
   - products/api_prods_user_getproduct
@@ -85,7 +83,6 @@ includes: # api - group - category - call
   - instrs/api_instrs_divider
   - instrs/api_instrs_user_getinstrument
   - instrs/api_instrs_user_getinstruments
-  - instrs/api_instrs_user_getomsfeetiers
   - tickets/api_tickets_divider
   - tickets/api_tix_system_cancelwithdraw
   - tickets/api_tix_system_createdepositticket
