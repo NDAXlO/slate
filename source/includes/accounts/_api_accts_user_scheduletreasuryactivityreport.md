@@ -8,7 +8,7 @@ Schedules a series of treasury activity reports for a list of accounts on a sing
 
 A user with Trading permission may schedule reports only for accounts with which he is associated; a user with Operator permission may schedule reports for any accounts.
 
-The Treasury Activity Report itself is delivered as a comma-separated-value (CSV) file. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from AlphaPoint.
+The Treasury Activity Report itself is delivered as a comma-separated-value (CSV) file. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from NDAX.
 
 ### Request
 

@@ -8,7 +8,7 @@
 
 Creates a quote. A quote expresses a willingness to buy or sell at a given price. Both a quote and an order will execute. Only a user with Operator or MarketMaker permission can create a quote.
 
-<aside class="notice"><strong>Note:</strong> Quoting is not enabled for the retail end user of AlphaPoint software. Only registered market participants or market makers may quote.</aside>
+<aside class="notice"><strong>Note:</strong> Quoting is not enabled for the retail end user of NDAX software. Only registered market participants or market makers may quote.</aside>
 
 ### Request
 

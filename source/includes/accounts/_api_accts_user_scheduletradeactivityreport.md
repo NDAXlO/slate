@@ -8,7 +8,7 @@ Schedules a series of trade activity reports to run for a list of accounts on a 
 
 Users with Trading permission can schedule reports for accounts with which they are associated; users with Operator permissions can schedule reports for any accounts.
 
-Trade Activity Reports are delivered in comma-separated-value (CSV) format. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from AlphaPoint.
+Trade Activity Reports are delivered in comma-separated-value (CSV) format. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from NDAX.
 
 ### Request
 

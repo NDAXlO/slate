@@ -8,7 +8,7 @@ Creates an immediate report on historical trade activity on a specific Order Man
 
 A user with Trading permission can only generate reports for accounts with which he is associated; a user with Operator permission can generate reports for accounts associated with others.
 
-The Trade Activity Report is delivered as a comma-separated (CSV) file. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from AlphaPoint.
+The Trade Activity Report is delivered as a comma-separated (CSV) file. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from NDAX.
 
 ### Request
 
@@ -91,7 +91,7 @@ Similar objects are returned for **Generate~Report** and **Schedule~Report** cal
 | intervalEndTime   | **string.**  The end of the period that the report will cover. |
 | RequestStatus     | **string.** The status of the request for the trade activity report. A Generate~Report request will always return *Submitted*. Each request returns one of:<br />Submitted<br />Validating<br />Scheduled<br />InProgress<br />Completed<br />Aborting<br />Aborted<br />UserCancelled<br />SysRetired<br />UserCancelled<br />Pending |
 | ReportFrequency   | **string.** When the report runs. For a **Generate~Report** call, this is always OnDemand. One of:<br />OnDemand<br />Hourly<br />Daily<br />Weekly<br />Monthly<br />Annually |
-| intervalDuration  | **long integer.** The period that the report covers relative to the run date. The **Generate~Report** call requires a start time and an end time. The AlphaPoint software calculates the difference between them as *intervalDuration*.<br /><br />For example, say that you specify a 90-day start-date-to-end-date window for a report. The *intervalDuration* value returns a value equivalent to 90 days. If you have called **Generate~Report**, that value simply confirms the length of time that the on-demand report covers. |
+| intervalDuration  | **long integer.** The period that the report covers relative to the run date. The **Generate~Report** call requires a start time and an end time. The NDAX software calculates the difference between them as *intervalDuration*.<br /><br />For example, say that you specify a 90-day start-date-to-end-date window for a report. The *intervalDuration* value returns a value equivalent to 90 days. If you have called **Generate~Report**, that value simply confirms the length of time that the on-demand report covers. |
 | RequestId         | **string.** The ID of the original request. Request IDs are long strings unique within the Order Management System. |
 | lastInstanceId    | **string.** For scheduled reports, the report ID of the most recent previously run report. Will be *null* for a **Generate~Report** call, because generated reports are on-demand. |
 | accountIds        | **integer array.** A comma-delimited array of account IDs whose trades are reported in the trade activity report. |

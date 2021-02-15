@@ -6,7 +6,7 @@
 
 Cancels a quote that has not been executed yet.
 
-<aside class="notice"><strong>Note:</strong> Quoting is not enabled for the retail end user of the AlphaPoint software. Only registered market participants or marketmakers may quote. Only a user with Operator permission can cancel quotes for another user.</aside>
+<aside class="notice"><strong>Note:</strong> Quoting is not enabled for the retail end user of the NDAX software. Only registered market participants or marketmakers may quote. Only a user with Operator permission can cancel quotes for another user.</aside>
 
 ### Request
 

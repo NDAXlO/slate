@@ -8,7 +8,7 @@ Schedules a series of transaction activity reports for a list of accounts on a s
 
 Users with Trading permission can schedule transaction activity reports only for accounts with which they are associated; users with Operator permission can schedule transaction activity reports for any account.
 
-Transaction Activity Reports are delivered in comma-separated-value (CSV) format. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from AlphaPoint.
+Transaction Activity Reports are delivered in comma-separated-value (CSV) format. For specific CSV formatting information, see the APEX Extract CSV Data Dictionary, available from NDAX.
 
 ### Request
 

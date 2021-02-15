@@ -4,7 +4,7 @@
 **Permissions:** Operator, MarketMaker<br />
 **Call Type:** Synchronous
 
-Updates an existing quote. Quoting is not enabled for the retail end user of the AlphaPoint software. Only registered market participants or market makers may quote.
+Updates an existing quote. Quoting is not enabled for the retail end user of the NDAX software. Only registered market participants or market makers may quote.
 
 <aside class="warning"><strong>Warning</strong> **UpdateQuote** resets the quote's priority in the order book.</aside>
 

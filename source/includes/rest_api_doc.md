@@ -8,10 +8,6 @@ Store the Token for session identification on all other requests. Store the User
 
 #### POST
 
-##### /AP/Authenticate
-
-[https://demo.alphapoint.com:8443/AP/Authenticate](https://demo.alphapoint.com:8443/AP/Authenticate)
-
 ##### Headers
 
 *   Content-Type: application/json
@@ -190,10 +186,6 @@ The ID of the Order Management System your user belongs to. Use this value anywh
 Returns an array of objects for each Product (Asset or Currency) on the exchange.
 
 #### GET
-
-##### /AP/GetProducts
-
-[https://demo.alphapoint.com:8443/AP/GetProducts?OMSId=1](https://demo.alphapoint.com:8443/AP/GetProducts?OMSId=1)
 
 ##### URL-Encoded Parameters
 
@@ -449,10 +441,6 @@ Specifies if fees cannot be taken in this product. (In the case where this is tr
 Returns an array of objects for each Instrument (Trade-able pair of assets) on the exchange.
 
 #### GET
-
-##### /AP/GetInstruments
-
-[https://demo.alphapoint.com:8443/AP/GetInstruments?OMSId=1](https://demo.alphapoint.com:8443/AP/GetInstruments?OMSId=1)
 
 ##### URL-Encoded Parameters
 
@@ -879,10 +867,6 @@ Retrieves a list of positions (balances) and related information.
 
 #### GET
 
-##### /AP/GetAccountPositions
-
-[https://demo.alphapoint.com:8443/AP/GetAccountPositions?OMSId=1&AccountId=4](https://demo.alphapoint.com:8443/AP/GetAccountPositions?OMSId=1&AccountId=4)
-
 ##### Headers
 
 *   APToken [Token string supplied in AuthenticateUser Response]
@@ -895,7 +879,7 @@ Retrieves a list of positions (balances) and related information.
 
 ##### Response Payload
 
-<table class="wysiwyg-macro" data-macro-name="code" data-macro-id="fcd3f6e4-3664-4615-be9b-63280dddc202" data-macro-parameters="language=js" data-macro-schema-version="1" style="background-image: url(https://alphapoint.atlassian.net/wiki/plugins/servlet/confluence/placeholder/macro-heading?definition=e2NvZGU6bGFuZ3VhZ2U9anN9&amp;locale=en_US&amp;version=2); background-repeat: no-repeat;" data-macro-body-type="PLAIN_TEXT">
+<table class="wysiwyg-macro" data-macro-name="code" data-macro-id="fcd3f6e4-3664-4615-be9b-63280dddc202" data-macro-parameters="language=js" data-macro-schema-version="1" data-macro-body-type="PLAIN_TEXT">
 
 <tbody>
 
@@ -1216,10 +1200,6 @@ Returns an array of 0 or more orders that are still active on the market. The ca
 
 #### GET
 
-##### /AP/GetOpenOrders
-
-[https://demo.alphapoint.com:8443/AP/GetOpenOrders?OMSId=1&AccountId=4](https://demo.alphapoint.com:8443/AP/GetOpenOrders?OMSId=1&AccountId=4)
-
 ##### Headers
 
 *   APToken [Token string supplied in AuthenticateUser Response]
@@ -1232,7 +1212,7 @@ Returns an array of 0 or more orders that are still active on the market. The ca
 
 ##### Response Payload
 
-<table class="wysiwyg-macro" data-macro-name="code" data-macro-id="f1bcb8e7-5f1f-479b-a9c1-349a0197ea23" data-macro-parameters="language=js" data-macro-schema-version="1" style="background-image: url(https://alphapoint.atlassian.net/wiki/plugins/servlet/confluence/placeholder/macro-heading?definition=e2NvZGU6bGFuZ3VhZ2U9anN9&amp;locale=en_US&amp;version=2); background-repeat: no-repeat;" data-macro-body-type="PLAIN_TEXT">
+<table class="wysiwyg-macro" data-macro-name="code" data-macro-id="f1bcb8e7-5f1f-479b-a9c1-349a0197ea23" data-macro-parameters="language=js" data-macro-schema-version="1"  data-macro-body-type="PLAIN_TEXT">
 
 <tbody>
 
@@ -1975,10 +1955,6 @@ The Order Management System ID.
 ## GetOrderHistory
 
 Returns a complete list of all orders, open, filled, canceled and rejected. Limited to 100.
-
-##### /AP/GetOrderHistory
-
-[https://demo.alphapoint.com:8443/AP/GetOrderHistory?OMSId=1&AccountId=4](https://demo.alphapoint.com:8443/AP/GetOrderHistory?OMSId=1&AccountId=4)
 
 ##### Headers
 
@@ -2769,10 +2745,6 @@ Retrieves the status of a single order.
 
 #### GET
 
-##### /AP/GetOrderStatus
-
-[https://demo.alphapoint.com:8081:8443/AP/GetOrderStatus?OMSId=1&AccountId=4&OrderId=15069](https://demo.alphapoint.com:8081:8443/AP/GetOrderStatus?OMSId=1&AccountId=4&OrderId=15069)
-
 ##### Headers
 
 *   APToken [Token string supplied in AuthenticateUser Response]
@@ -3530,10 +3502,6 @@ The Order Management System ID.
 
 #### POST
 
-##### /AP/SendOrder
-
-[https://demo.alphapoint.com:8081:8443/AP/SendOrder](https://demo.alphapoint.com:8081:8443/AP/SendOrder)
-
 ##### Headers
 
 *   Content-Type=application/json
@@ -4060,10 +4028,6 @@ Y
 
 #### POST
 
-##### /AP/ModifyOrder
-
-[https://demo.alphapoint.com:8443/AP/ModifyOrder](https://demo.alphapoint.com:8443/AP/ModifyOrder)
-
 ##### Headers
 
 *   Content-Type=application/json
@@ -4300,10 +4264,6 @@ Y
 ## CancelReplaceOrder
 
 #### POST
-
-##### /AP/CancelReplaceOrder
-
-[https://demo.alphapoint.com:8443/AP/CancelReplaceOrder](https://demo.alphapoint.com:8443/AP/CancelReplaceOrder)
 
 ##### Headers
 
@@ -4861,10 +4821,6 @@ Y
 
 #### POST
 
-##### /AP/CancelOrder
-
-[https://demo.alphapoint.com:8443/AP/CancelOrder](https://demo.alphapoint.com:8443/AP/CancelOrder)
-
 ##### Headers
 
 *   Content-Type=application/json
@@ -5073,10 +5029,6 @@ Conditional
 
 #### POST
 
-##### /AP/CancelAllOrders
-
-[https://demo.alphapoint.com:8443/AP/CancelAllOrders](https://demo.alphapoint.com:8443/AP/CancelAllOrders)
-
 ##### Headers
 
 *   Content-Type=application/json
@@ -5254,4 +5206,4 @@ Y
 
 * * *
 
-For assistance with Rest API, please contact [support@alphapoint.com](mailto:support@alphapoint.com)
+For assistance with Rest API, please contact [support@ndax.io](mailto:support@ndax.io)

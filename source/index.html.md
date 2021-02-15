@@ -140,9 +140,9 @@ search: true
 
 # Introduction
 
-This API covers the User-category calls in **version 3.3** of the AlphaPoint Exchange software. It includes calls required for log-in and authentication.
+This API covers the User-category calls in **version 3.3** of the NDAX Exchange software. It includes calls required for log-in and authentication.
 
-The calls have been organized roughly to correspond to similar functions you would find in the AlphaPoint Admin. For example, in the Admin you manage users in the Users function. So calls that manage users have been gathered in the Users section of the API.
+The calls have been organized roughly to correspond to similar functions you would find in the NDAX Admin. For example, in the Admin you manage users in the Users function. So calls that manage users have been gathered in the Users section of the API.
 
 
 ## 3.4.1 New Endpoints
